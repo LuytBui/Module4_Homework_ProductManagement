@@ -12,8 +12,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-    public static final String MSG_ADD_PRODUCT_SUCCESSED = "Thêm sản phẩm thành công";
-    public static final String MSG_ADD_PRODUCT_FAILED = "Thất bại! Kiểm tra lại dữ liệu nhập vào!";
+    public static final String MSG_ACTION_SUCCESSED = "Thao tac thanh cong";
+    public static final String MSG_ACTION_FAILED = "Thao tac that bai!";
     @Autowired
     IProductService productService;
 
@@ -40,7 +40,29 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("product/add");
         Product product = new Product(name, price, description, image);
         boolean success = productService.create(product);
-        String message = success ? MSG_ADD_PRODUCT_SUCCESSED : MSG_ADD_PRODUCT_FAILED;
+        String message = success ? MSG_ACTION_SUCCESSED : MSG_ACTION_FAILED;
+        modelAndView.addObject("success", success);
+        modelAndView.addObject("message", message);
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView showDeleteForm(@PathVariable int id){
+        Product product = productService.findByID(id);
+        if (product == null) {
+            return new ModelAndView("redirect: /products");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("product/delete");
+        modelAndView.addObject("product", product);
+        return modelAndView;
+    }
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteProduct(@PathVariable int id){
+        boolean success = productService.deleteById(id);
+        String message = success ? MSG_ACTION_SUCCESSED : MSG_ACTION_FAILED;
+
+        ModelAndView modelAndView = new ModelAndView("product/delete");
         modelAndView.addObject("success", success);
         modelAndView.addObject("message", message);
         return modelAndView;

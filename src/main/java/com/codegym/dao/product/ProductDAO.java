@@ -51,7 +51,7 @@ public class ProductDAO implements IProductDAO{
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 long price = resultSet.getLong("price");
-                String description = resultSet.getString("descrition");
+                String description = resultSet.getString("description");
                 String image = resultSet.getString("image");
                 product = new Product(id, name, price, description, image);
             }
