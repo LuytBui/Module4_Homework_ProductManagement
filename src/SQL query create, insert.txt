@@ -6,7 +6,7 @@ create table products(
     name varchar(40) not null ,
     price bigint check (price > 0),
     description varchar(50) default '',
-    image varchar(100)
+    image varchar(500)
 );
 
 insert into products (name, price, description, image) values
