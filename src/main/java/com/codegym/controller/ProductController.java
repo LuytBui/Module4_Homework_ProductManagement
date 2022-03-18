@@ -67,4 +67,27 @@ public class ProductController {
         modelAndView.addObject("message", message);
         return modelAndView;
     }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView showEditForm(@PathVariable int id){
+        Product product = productService.findByID(id);
+        if (product == null) {
+            return new ModelAndView("redirect: /products");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("product/edit");
+        modelAndView.addObject("product", product);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editProduct(@PathVariable int id, @ModelAttribute Product product){
+        boolean success = productService.updateById(id, product);
+        String message = success ? MSG_ACTION_SUCCESSED : MSG_ACTION_FAILED;
+
+        ModelAndView modelAndView = new ModelAndView("product/edit");
+        modelAndView.addObject("success", success);
+        modelAndView.addObject("message", message);
+        return modelAndView;
+    }
 }

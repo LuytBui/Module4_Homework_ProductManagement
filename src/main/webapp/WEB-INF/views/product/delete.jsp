@@ -39,7 +39,7 @@
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="image" name="image" disabled>
+            <input type="text" class="form-control" id="image" name="image" value="${product.image}" disabled>
         </div>
         <button type="submit" class="btn btn-danger">Confirm delete</button>
         <a class="btn btn-primary" href="/products" id="btn-back">Back to list</a>
